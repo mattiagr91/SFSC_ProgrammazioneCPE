@@ -57,7 +57,7 @@ import javax.swing.SwingUtilities;
 /**
  * @author paolocielo
  */
-public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
+public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
     
     /**
      * Creates new form SSH_Interface
@@ -77,6 +77,8 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
      * VARIABLE
      **************************************************************************
      */
+    
+    private final String version = "4.0";
     private final String sep = System.getProperty("file.separator");
      
     private String dir = null;
@@ -114,16 +116,16 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
      * Description Initializes elements
      **************************************************************************
      */
-    public SCSF_Programmazione_CPE() throws IOException, ParseException, JSchException {
+    public SFSC_Programmazione_CPE() throws IOException, ParseException, JSchException {
         try {
             initComponents();
             
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             
-            this.setTitle("SFSC Programmazione CPE");
+            this.setTitle("SFSC Programmazione CPE v"+version);
             this.getRootPane().setDefaultButton(ButtonProgPanel);
             
-            CodeSource codeSource = SCSF_Programmazione_CPE.class.getProtectionDomain().getCodeSource();
+            CodeSource codeSource = SFSC_Programmazione_CPE.class.getProtectionDomain().getCodeSource();
             File jarFile = new File(codeSource.getLocation().toURI().getPath());
             dir = jarFile.getParentFile().getPath();
             // Create file log
@@ -131,8 +133,11 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
             
             //write(log.file.toString());
             
-            
+            log.write("SFSC Programmazione CPE v"+version);
+            log.addSpace();
             log.initializeFile("SSH_Interface");
+            
+
             String encrypted = dir+sep+"encrypted";
             TextFieldFolderFiles.setText(encrypted);
             PanelUnderConfigurationLabel.setText(" ");
@@ -167,7 +172,7 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
 //            log.write((cont + 1) + ") " + list.get(cont + 1));
 //        }
         } catch (URISyntaxException ex) {
-            Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -403,9 +408,9 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
                                 write("Configurazione cancellata dal programma, impossibile trovare il file: " + e.getMessage());
                                 break;
                             } catch (IOException ex) {
-                                Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (ParseException ex) {
-                                Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         catch (WrongPanelTypeException e2) {
@@ -414,9 +419,9 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
                                 write(e2.getMessage());
                                 break;
                             } catch (IOException ex) {
-                                Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (ParseException ex) {
-                                Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         catch (ConfigurationCancelledByProgramException e3) {
@@ -430,13 +435,13 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
                                 write(e4.getMessage());
                                 break;
                             } catch (IOException ex) {
-                                Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (ParseException ex) {
-                                Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         catch (Exception ex) {
-                            Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
@@ -515,7 +520,7 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
                 try {
                     checkFolderFileAndPopulateCheckBox();
                 } catch (IOException ex) {
-                    Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Devi scegliere una cartella, non un file!", "Errore" ,JOptionPane.ERROR_MESSAGE);
@@ -601,7 +606,7 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
         try {
             sleep(50);
         } catch (InterruptedException ex) {
-            Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
         }
         new Thread(new Runnable() {
             public void run() {
@@ -681,7 +686,7 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
         log.addSpace();
         log.write("Identification of panel model");
 				  
-        write("Identificazione modello del pannello");
+        write("\nIdentificazione modello del pannello");
 		
         retry = true;
         while(retry == true){
@@ -818,79 +823,80 @@ public class SCSF_Programmazione_CPE extends javax.swing.JFrame {
             throw new FileNotFoundException(userGraphPath);
         }
         
-       
-        
-         /**
-         * *****************************************************************
-         * ASK ARCHITECTURE TO PANEL
-         ******************************************************************
-         */
         String upgradePath = "";
-        log.addSpace();
-        log.write("Identification of panel architecture");
-        write("\nIdentificazione architettura del pannello");
-        
-        retry = true;
-        while(retry == true){
-            
-            panelArchitecture = SSHAskPanelArchitectureName();
-
-            log.addSpace();
-            log.write("Panel architecture:" + panelArchitecture);
-            write("Architettura: " + panelArchitecture+"\n");
-            
-            retry = false;
-            File[] fileupgrade;
-            
-            switch (panelArchitecture){
-                case "mipsbe":
-                    fileupgrade = listFilesMatching(new File(TextFieldFolderFiles.getText()), "upgrade_(.+)_standard.npk");
-                    if(fileupgrade.length==0){
-                        log.write("Upgrade file NOT found");
-                        write("File aggiornamento NON trovato");
-
-                        UpgradeCheckBox.setEnabled(true);
-                        ButtonProgPanel.setEnabled(true);
-                        throw new FileNotFoundException(upgradePath);
-                    }
-                    log.write("Upgrade file exist");
-                    write("File aggiornamento esiste");
-                    upgradePath=fileupgrade[0].getPath();
-                    filePanelVersion = fileupgrade[0].getName().split("_")[1];
-                    break;
-                case "arm":
-                    fileupgrade = listFilesMatching(new File(TextFieldFolderFiles.getText()), "upgrade_(.+)_ac.npk");
-                    if(fileupgrade.length==0){
-                        log.write("Upgrade file NOT found");
-                        write("File aggiornamento NON trovato");
-
-                        UpgradeCheckBox.setEnabled(true);
-                        ButtonProgPanel.setEnabled(true);
-                        throw new FileNotFoundException(upgradePath);
-                    }
-                    upgradePath=fileupgrade[0].getPath();
-                    filePanelVersion = fileupgrade[0].getName().split("_")[1];
-                    break;
-                case "smips":
-                    fileupgrade = listFilesMatching(new File(TextFieldFolderFiles.getText()), "upgrade_(.+)_hap.npk");
-                    if(fileupgrade.length==0){
-                        log.write("Upgrade file NOT found");
-                        write("File aggiornamento NON trovato");
-
-                        UpgradeCheckBox.setEnabled(true);
-                        ButtonProgPanel.setEnabled(true);
-                        throw new FileNotFoundException(upgradePath);
-                    }
-                    upgradePath=fileupgrade[0].getPath();
-                    filePanelVersion = fileupgrade[0].getName().split("_")[1];
-                    break;
-                default:
-                    //architettura non supportata
-                    break;
-            }
-        }
        
-        
+        if(UpgradeCheckBox.isSelected()){
+            /**
+            * *****************************************************************
+            * ASK ARCHITECTURE TO PANEL
+            ******************************************************************
+            */
+          
+           log.addSpace();
+           log.write("Identification of panel architecture");
+           write("\nIdentificazione architettura del pannello");
+
+           retry = true;
+           while(retry == true){
+
+               panelArchitecture = SSHAskPanelArchitectureName();
+
+               log.addSpace();
+               log.write("Panel architecture:" + panelArchitecture);
+               write("Architettura: " + panelArchitecture+"\n");
+
+               retry = false;
+               File[] fileupgrade;
+
+               switch (panelArchitecture){
+                   case "mipsbe":
+                       fileupgrade = listFilesMatching(new File(TextFieldFolderFiles.getText()), "upgrade_(.+)_standard.npk");
+                       if(fileupgrade.length==0){
+                           log.write("Upgrade file NOT found");
+                           write("File aggiornamento NON trovato");
+
+                           UpgradeCheckBox.setEnabled(true);
+                           ButtonProgPanel.setEnabled(true);
+                           throw new FileNotFoundException(upgradePath);
+                       }
+                       log.write("Upgrade file exist");
+                       write("File aggiornamento esiste");
+                       upgradePath=fileupgrade[0].getPath();
+                       filePanelVersion = fileupgrade[0].getName().split("_")[1];
+                       break;
+                   case "arm":
+                       fileupgrade = listFilesMatching(new File(TextFieldFolderFiles.getText()), "upgrade_(.+)_ac.npk");
+                       if(fileupgrade.length==0){
+                           log.write("Upgrade file NOT found");
+                           write("File aggiornamento NON trovato");
+
+                           UpgradeCheckBox.setEnabled(true);
+                           ButtonProgPanel.setEnabled(true);
+                           throw new FileNotFoundException(upgradePath);
+                       }
+                       upgradePath=fileupgrade[0].getPath();
+                       filePanelVersion = fileupgrade[0].getName().split("_")[1];
+                       break;
+                   case "smips":
+                       fileupgrade = listFilesMatching(new File(TextFieldFolderFiles.getText()), "upgrade_(.+)_hap.npk");
+                       if(fileupgrade.length==0){
+                           log.write("Upgrade file NOT found");
+                           write("File aggiornamento NON trovato");
+
+                           UpgradeCheckBox.setEnabled(true);
+                           ButtonProgPanel.setEnabled(true);
+                           throw new FileNotFoundException(upgradePath);
+                       }
+                       upgradePath=fileupgrade[0].getPath();
+                       filePanelVersion = fileupgrade[0].getName().split("_")[1];
+                       break;
+                   default:
+                       //architettura non supportata
+                       break;
+               }
+           }
+
+        }
         
                
         /**
@@ -1391,23 +1397,25 @@ return 1;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
-                new SCSF_Programmazione_CPE().setVisible(true);
+                new SFSC_Programmazione_CPE().setVisible(true);
             } catch (IOException | ParseException | JSchException ex) {
-                Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -1578,9 +1586,9 @@ return 1;
             encrypted.close();
             decrypted.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AES.InvalidPasswordException | AES.InvalidAESStreamException | AES.StrongEncryptionNotAvailableException | IOException ex) {
-            Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
     }
@@ -1618,7 +1626,7 @@ return 1;
                         panelType = extractPanelType(filePath.toString());
                         usedPanels.put(completename, panelType);                        
                     } catch (FileNotFoundException | ParseException ex) {
-                        Logger.getLogger(SCSF_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(SFSC_Programmazione_CPE.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }    

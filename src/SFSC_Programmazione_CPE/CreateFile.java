@@ -64,7 +64,7 @@ public class CreateFile {
     public CreateFile() throws IOException
     {
         try {
-            CodeSource codeSource = SCSF_Programmazione_CPE.class.getProtectionDomain().getCodeSource();
+            CodeSource codeSource = SFSC_Programmazione_CPE.class.getProtectionDomain().getCodeSource();
             File jarFile = new File(codeSource.getLocation().toURI().getPath());
             String dir = jarFile.getParentFile().getPath();
             
