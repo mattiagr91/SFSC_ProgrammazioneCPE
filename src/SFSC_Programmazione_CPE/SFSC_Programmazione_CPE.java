@@ -778,7 +778,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
         
         String userGraphPath = null;
         
-        if ( panelName.contains("ac")) {
+        if ( panelName.contains("SXT Lite5 ac")) {
             userGraphPath = TextFieldFolderFiles.getText() + sep+ "utente_ac.json";
         } else{
             userGraphPath = TextFieldFolderFiles.getText() + sep+ "utente.json";
