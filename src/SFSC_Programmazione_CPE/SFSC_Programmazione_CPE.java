@@ -699,7 +699,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
                 
                 retry = false;
                                
-                if(!panelName.equals(panelLabelText) && !panelName.equals("any") && !((panelName.equals("SXT 5 ac")) && (panelLabelText.equals("SXT Lite5 ac")))){
+                if(!panelName.equals(panelLabelText) && !panelLabelText.equals("any") && !((panelName.equals("SXT 5 ac")) && (panelLabelText.equals("SXT Lite5 ac")))){
                     throw new ConfigurationCancelledByProgramException("Configurazione annullata a causa di pannello errato!\nPannello atteso: "+panelLabelText+"\nPannello collegato: "+panelName);
                 }
                 
