@@ -78,7 +78,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
      **************************************************************************
      */
     
-    private final String version = "4.0.1";
+    private final String version = "4.0.2";
     private final String sep = System.getProperty("file.separator");
      
     private String dir = null;
@@ -732,7 +732,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
         
         String userGraphPath = null;
         
-        if ( panelName.contains("ac")) {
+        if ( panelName.contains("ac") && !panelName.contains("SXTsq")) {
             userGraphPath = TextFieldFolderFiles.getText() + sep+ "utente_ac.json";
         } else{
             userGraphPath = TextFieldFolderFiles.getText() + sep+ "utente.json";
