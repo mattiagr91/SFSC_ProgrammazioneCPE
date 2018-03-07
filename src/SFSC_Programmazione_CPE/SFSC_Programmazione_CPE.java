@@ -78,7 +78,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
      **************************************************************************
      */
     
-    private final String version = "4.0.2";
+    private final String version = "4.1";
     private final String sep = System.getProperty("file.separator");
      
     private String dir = null;
@@ -405,6 +405,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
                             try {
                                 Toolkit.getDefaultToolkit().beep();
                                 JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Impossibile trovare il file", 0);
+                                log.write("Configuration aborted by the program, file not found:"+e.getMessage());
                                 write("Configurazione cancellata dal programma, impossibile trovare il file: " + e.getMessage());
                                 break;
                             } catch (IOException ex) {
@@ -652,6 +653,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
         log.addSpace();
         log.write("START PROGRAMMING");
         log.addSpace();
+        write("Versione: "+version+"\n");
         write("Sto configurando il pannello "+panelLabelText+" di " + surname + " " + name);
         write("\nINIZIO PROGRAMMAZIONE\n\n");
 		
@@ -665,7 +667,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
                     UpgradeCheckBox.setEnabled(true);
                     ButtonProgPanel.setEnabled(true);
                     waitOrFinish = 0;
-                    log.write("configuration stopped");
+                    log.write("Configuration aborted by the operator, the panel was not responding.");
                     write("Configurazione pannello cancellata dall'operatore");
                     throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
                 }
@@ -700,6 +702,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
                 retry = false;
                                
                 if(!panelName.equals(panelLabelText) && !panelLabelText.equals("any") && !((panelName.equals("SXT 5 ac")) && (panelLabelText.equals("SXT Lite5 ac")))){
+                    log.write("Configuration aborted: wrong panel type, expected:"+panelLabelText+", actual panel:"+panelName);
                     throw new ConfigurationCancelledByProgramException("Configurazione annullata a causa di pannello errato!\nPannello atteso: "+panelLabelText+"\nPannello collegato: "+panelName);
                 }
                 
@@ -713,6 +716,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
 
                 retry = askAboutCommunicationProblem();
                 if(retry == false){
+                     log.write("Configuration aborted by the operator, the panel was not responding.");
                     throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
                 } else {
                     log.addSpace();
@@ -732,7 +736,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
         
         String userGraphPath = null;
         
-        if ( panelName.contains("ac") && !panelName.contains("SXTsq")) {
+        if ( panelName.contains("ac") && !panelName.contains("SXTsq") && !panelName.contains("LHG")) {
             userGraphPath = TextFieldFolderFiles.getText() + sep+ "utente_ac.json";
         } else{
             userGraphPath = TextFieldFolderFiles.getText() + sep+ "utente.json";
@@ -813,7 +817,6 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
                            ButtonProgPanel.setEnabled(true);
                            throw new FileNotFoundException(upgradePath);
                        }
-                       log.write("Upgrade file exist");
                        write("File aggiornamento esiste");
                        upgradePath=fileupgrade[0].getPath();
                        filePanelVersion = fileupgrade[0].getName().split("_")[1];
@@ -828,6 +831,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
                            ButtonProgPanel.setEnabled(true);
                            throw new FileNotFoundException(upgradePath);
                        }
+                       write("File aggiornamento esiste");
                        upgradePath=fileupgrade[0].getPath();
                        filePanelVersion = fileupgrade[0].getName().split("_")[1];
                        break;
@@ -841,11 +845,12 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
                            ButtonProgPanel.setEnabled(true);
                            throw new FileNotFoundException(upgradePath);
                        }
+                       write("File aggiornamento esiste");
                        upgradePath=fileupgrade[0].getPath();
                        filePanelVersion = fileupgrade[0].getName().split("_")[1];
                        break;
                    default:
-                       //architettura non supportata
+                       log.write("Not supported architecture");
                        break;
                }
            }
@@ -901,6 +906,9 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
 retry = true;
 while(retry == true){
     try{
+        log.write("Upgrade file:"+upgradePath);
+        log.write("User file:"+userPath);
+        log.write("JSON file:"+userGraphPath);
         userPath = sendFilesWithSCP(upgradePath, userPath, userGraphPath);
         retry = false;
     } catch(Exception e) {
@@ -909,6 +917,7 @@ while(retry == true){
         write("Problema con la comunicazione con il pannello");
         retry = askAboutCommunicationProblem();
         if(retry == false){
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         } else {
             log.addSpace();
@@ -942,6 +951,7 @@ if (UpgradeCheckBox.isSelected()) {
             write("Problema con la comunicazione con il pannello");
             retry = askAboutCommunicationProblem();
             if(retry == false){
+                log.write("Configuration aborted by the operator, the panel was not responding.");
                 throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
             } else {
                 log.addSpace();
@@ -964,7 +974,7 @@ if (UpgradeCheckBox.isSelected()) {
                 UpgradeCheckBox.setEnabled(true);
                 ButtonProgPanel.setEnabled(true);
                 waitOrFinish = 0;
-                log.write("configuration stopped");
+                 log.write("Configuration aborted by the operator, the panel was not responding.");
                 write("Configurazione pannello cancellata dall'operatore");
                 throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
             }
@@ -987,6 +997,7 @@ if (UpgradeCheckBox.isSelected()) {
         try{
             panelVersion = SSHAskPanelVersion();
             panelVersion = panelVersion.split(" ")[0];
+            log.write("panel version:"+panelVersion);
             retry = false;
         } catch(Exception e){
             log.addSpace();
@@ -994,6 +1005,7 @@ if (UpgradeCheckBox.isSelected()) {
             write("Problema con la comunicazione con il pannello");
             retry = askAboutCommunicationProblem();
             if(retry == false){
+                log.write("Configuration aborted by the operator, the panel was not responding.");
                 throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
             } else {
                 log.addSpace();
@@ -1007,6 +1019,7 @@ if (UpgradeCheckBox.isSelected()) {
         log.addSpace();
         log.write("Panel new version:" + panelVersion);
         write("Versione del pannello aggiornata: " + panelVersion+"\n");
+        log.write("Configuration aborted by the program, the panel was not upgraded");
         throw new ConfigurationCancelledByProgramException("Configurazione annullata, il pannello non è stato aggiornato");
     }
     
@@ -1054,6 +1067,7 @@ while(retry == true){
         write("Problema con la comunicazione con il pannello");
         retry = askAboutCommunicationProblem();
         if(retry == false){
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         } else {
             log.addSpace();
@@ -1097,7 +1111,7 @@ while(waitOrFinish != 1){
             UpgradeCheckBox.setEnabled(true);
             ButtonProgPanel.setEnabled(true);
             waitOrFinish = 0;
-            log.write("configuration stopped");
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             write("Configurazione pannello cancellata dall'operatore");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         }
@@ -1132,6 +1146,7 @@ while(retry == true){
         write("Problema con la comunicazione con il pannello");
         retry = askAboutCommunicationProblem();
         if(retry == false){
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         } else {
             log.addSpace();
@@ -1158,7 +1173,7 @@ while(waitOrFinish != 1){
             UpgradeCheckBox.setEnabled(true);
             ButtonProgPanel.setEnabled(true);
             waitOrFinish = 0;
-            log.write("configuration stopped");
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             write("Configurazione pannello cancellata dall'operatore");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         }
@@ -1198,6 +1213,7 @@ while(retry == true){
         write("Problema con la comunicazione con il pannello");
         retry = askAboutCommunicationProblem();
         if(retry == false){
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         } else {
             log.addSpace();
@@ -1221,7 +1237,7 @@ while(waitOrFinish != 1){
             UpgradeCheckBox.setEnabled(true);
             ButtonProgPanel.setEnabled(true);
             waitOrFinish = 0;
-            log.write("configuration stopped");
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             write("Configurazione pannello cancellata dall'operatore");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         }
@@ -1260,6 +1276,7 @@ while(retry == true){
         write("Problema con la comunicazione con il pannello");
         retry = askAboutCommunicationProblem();
         if(retry == false){
+            log.write("Configuration aborted by the operator, the panel was not responding.");
             throw new ConfigurationCancelledByOperatorException("Configurazione pannello cancellata dall'operatore, il pannello non rispondeva");
         } else {
             log.addSpace();
@@ -1309,12 +1326,14 @@ if (read_identity.equals(correct_identity)) {
                 options,  //the titles of buttons
                 options[0]);
         if(n==1){
+            log.write("Configuration aborted by the operator after a corret configuration.");
             throw new ConfigurationCancelledByOperatorException("Configurazione annullata dall'operatore dopo una corretta configurazione");
         }
         TextAreaAll.setText(null);
     }
     if(configRemaining == 0)
     {
+        log.write("All configurations completed!");
         JOptionPane.showMessageDialog(this,
                 "Configurazioni completate!",
                 "Pannello configurato correttamente",
@@ -1423,7 +1442,7 @@ return 1;
             write(" - File aggiornamento");
         }
         
-        // Sends file for user Interface. Report error if the directory don't exist.
+        // Sends file for user Interface. Report error if the directory doesn't exist.
         int check = scp.putFile(userGraphPath, 1);
         if (check == 1) {
             log.write("ERROR: Directory for user file not found");
