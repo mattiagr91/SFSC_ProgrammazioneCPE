@@ -43,6 +43,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import static java.lang.Thread.sleep;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +51,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
@@ -78,7 +80,7 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
      **************************************************************************
      */
     
-    private final String version = "4.1";
+    private final String version = "4.1.1";
     private final String sep = System.getProperty("file.separator");
      
     private String dir = null;
@@ -118,6 +120,12 @@ public class SFSC_Programmazione_CPE extends javax.swing.JFrame {
      */
     public SFSC_Programmazione_CPE() throws IOException, ParseException, JSchException {
         try {
+            
+            URL iconURL = getClass().getResource("logo_sfsc_128.png");
+            // iconURL is null when not found
+            ImageIcon icon = new ImageIcon(iconURL);
+            this.setIconImage(icon.getImage());
+            
             initComponents();
             
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -961,7 +969,7 @@ if (UpgradeCheckBox.isSelected()) {
         }
     }
     
-    sleep(20000);
+    sleep(50000);
     
     log.write("Ping Panel");
     write("Ping @ " + IP_DEF + " attendere prego...");
@@ -1098,7 +1106,7 @@ write("Pannello raggiungibile. Riavvio il pannello");
 
 write("");
 
-sleep(20000);
+sleep(50000);
 
 log.write("Ping Panel");
 write("Ping @ " + IP_SET + " attendere prego...");
@@ -1128,7 +1136,8 @@ write("Pannello raggiungibile");
  * SET PASSWORD
  ******************************************************************
  */
-sleep(15000);
+
+sleep(10000);
 
 log.addSpace();
 log.write("SET PASSWORD");
@@ -1155,9 +1164,6 @@ while(retry == true){
         }
     }
 }
-
-
-
 
 sleep(5000);
 
